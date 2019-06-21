@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Margin = ({ children }) => (
-  <div style={{ paddingTop: '5vh', paddingLeft: '10vw', paddingRight: '10vw' }}>
-    {children}
-  </div>
+const Margin = ({ children, all }) => (
+  <div style={{ margin: all ? `${all}px` : `20px` }}>{children}</div>
 );
 
 export default Margin;

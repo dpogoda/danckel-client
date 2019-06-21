@@ -1,12 +1,19 @@
 import React from 'react';
 
+const width = typeof window !== 'undefined' ? window.innerWidth - 50 : 200; // eslint-disable-line
+const maxWidth = 200;
+const maxHeight = 50;
+const height =
+  width < maxWidth
+    ? Math.min(width / 10, maxHeight)
+    : Math.min(width / 10, maxHeight);
+
 const ButtonContainer = ({ children, type }) => (
   <div
     style={{
       position: type === 'loose' ? 'relative' : 'absolute',
       bottom: 0,
-      height: '15vh',
-      width: '100vw'
+      width: '100%',
     }}
   >
     <div
@@ -17,17 +24,31 @@ const ButtonContainer = ({ children, type }) => (
         alignItems: 'center',
         flex: 1,
         paddingLeft: '2vw',
-        paddingRight: '2vw'
+        paddingRight: '2vw',
       }}
     >
       {children.map ? (
         children.map(button => (
-          <div style={{ width: `${94 / children.length}vw`, height: '6vh' }}>
+          <div
+            style={{
+              width: `${width / children.length}px`,
+              height: `${height}px`,
+              maxWidth: `${maxWidth}px`,
+            }}
+          >
             {button}
           </div>
         ))
       ) : (
-        <div style={{ width: `${60}vw`, height: '5vh' }}>{children}</div>
+        <div
+          style={{
+            width: `${width}px`,
+            height: `${height}px`,
+            maxWidth: `${maxWidth}px`,
+          }}
+        >
+          {children}
+        </div>
       )}
     </div>
   </div>
