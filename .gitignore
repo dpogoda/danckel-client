@@ -1,0 +1,9 @@
+/node_modules/*
+/.cache/*
+/DevCowoSurgeSh/*
+/starter/*
+/public/*
+
+\.env\.production
+
+\.env\.development

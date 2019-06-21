@@ -1,0 +1,23 @@
+html,
+body {
+  height: 100%;
+  width: 100vw;
+  max-width: 100%; /* added */
+  background-image: linear-gradient(#23bdff, #4eddfd);
+}
+
+body {
+  height: 100%;
+}
+
+div {
+  color: white;
+}
+
+#___gatsby {
+  height: 100%;
+}
+
+#___gatsby > div {
+  height: 100%;
+}
