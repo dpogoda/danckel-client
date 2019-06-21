@@ -28,7 +28,7 @@ const client = new ApolloClient({
   // defaultOptions,
   link: authLink.concat(
     new HttpLink({
-      uri: process.env.APOLLO_ENDPOINT, 
+      uri: process.env.GATSBY_APOLLO_ENDPOINT, 
       fetch,
     }),
   ),
