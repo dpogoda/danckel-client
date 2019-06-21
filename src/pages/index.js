@@ -71,7 +71,7 @@ const SignIn = ({ signIn }) => {
                   if (typeof window !== 'undefined') {
                     window.localStorage.setItem('token', token); // eslint-disable-line
                     window.localStorage.setItem('id', id); // eslint-disable-line
-                    window.localStorage.setItem('roles', roles); // eslint-disable-line
+                    window.localStorage.setItem('roles', JSON.stringify(roles)); // eslint-disable-line
                     navigate('./onboarding');
                   }
                 })
