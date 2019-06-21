@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
 import { navigate } from 'gatsby';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
@@ -10,34 +11,49 @@ import Margin from '../../components/cowo/mobile/margin/Margin';
 const addFixRequest = ({ createFixRequest }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   return (
     <Margin>
-      <h3>What's broken?</h3>
+      <h3>What`s broken?</h3>
+      <p>{error}</p>
       <span>Please describe the location:</span>
       <TextField
         type="text"
         label="Location"
         placeholder="3rd floor red bathroom"
         onChange={value => setTitle(value)}
+        maxLength="25"
       />
       <div style={{ margin: '38px' }} />
       <span>Please provide a short description of the problem:</span>
       <TextField
-        multiline={true}
+        multiline
         type="text"
         label="Message"
         placeholder="Light bulbs not working :("
         onChange={value => setText(value)}
+        maxLength="140"
       />
       <ButtonContainer type="loose">
         <Button
           text="Send"
+          loading={loading}
           onPress={() => {
-            if (title !== '' && text !== '') {
+            if (title.trim() !== '' && text.trim() !== '') {
               if (typeof window !== 'undefined') {
-                createFixRequest({ variables: { title, text } }).then(() =>
-                  navigate('./request'),
-                );
+                setLoading(true);
+                createFixRequest({ variables: { title, text } })
+                  .then(() => navigate('./request'))
+                  .catch(error_ => {
+                    const errorMessage = _.get(error_, 'message', '').split(
+                      'GraphQL error: ',
+                    );
+                    if (errorMessage.length > 1) {
+                      setError(errorMessage[1]);
+                    }
+                  })
+                  .finally(() => setLoading(false));
               }
             }
           }}
