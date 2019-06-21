@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import moment from 'moment';
+import styles from './request.module.css';
 
 const Request = ({
   title,
   text,
   state,
   isOwn,
+  likeFixRequest,
+  unlikeFixRequest,
   deleteFixRequest,
   openFixRequest,
   closeFixRequest,
@@ -15,8 +18,10 @@ const Request = ({
   onDelete,
   createdAt,
   username,
+  likes,
 }) => {
   const [requestState, setRequestState] = useState(state);
+  const [likesState, setLikesState] = useState(likes);
   const createdAtFormatted = moment(createdAt).format('DD.MM.YYYY');
 
   return (
@@ -43,9 +48,69 @@ const Request = ({
         <span style={{ color: 'black' }}>{createdAtFormatted}</span>
       </div>
       <div style={{ margin: '10px' }} />
-      <span style={{ fontWeight: 'bold' }}>{title}</span>
-      <br />
-      <span>{text}</span>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ color: 'black', width: '100%' }}>
+          <span style={{ fontWeight: 'bold' }}>{title}</span>
+          <br />
+          <span>{text}</span>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'black',
+            textAlign: 'center',
+            width: `50px`,
+          }}
+        >
+          <button
+            type="submit"
+            onClick={() => {
+              likeFixRequest({ variables: { id } }).then(result => {
+                const {
+                  data: {
+                    likeFixRequest: { likes: likesResult },
+                  },
+                } = result;
+                if (likesResult) {
+                  setLikesState(likesResult.length);
+                }
+              });
+            }}
+            style={{ border: 'none', background: 'none' }}
+          >
+            <div className={styles.arrowUp} />
+          </button>
+          <span style={{ textAlign: 'center' }}>{likesState}</span>
+          <button
+            type="submit"
+            onClick={() => {
+              unlikeFixRequest({ variables: { id } }).then(result => {
+                const {
+                  data: {
+                    unlikeFixRequest: { likes: likesResult },
+                  },
+                } = result;
+                if (likesResult) {
+                  setLikesState(likesResult.length);
+                }
+                setLikesState(likesResult.length);
+              });
+            }}
+            style={{ border: 'none', background: 'none' }}
+          >
+            <div className={styles.arrowDown} />
+          </button>
+        </div>
+      </div>
       <div style={{ margin: '10px' }} />
       <div
         style={{
@@ -66,7 +131,7 @@ const Request = ({
               color: requestState === 'OPEN' ? 'orange' : 'green',
             }}
           >
-            {typeof requestState !== "undefined" && requestState.toLowerCase()}
+            {typeof requestState !== 'undefined' && requestState.toLowerCase()}
           </span>
           {isOwn ? (
             <button
@@ -154,8 +219,30 @@ const deleteFixRequest = gql`
   }
 `;
 
+const likeFixRequest = gql`
+  mutation likeFixRequest($id: String!) {
+    likeFixRequest(fixRequestId: $id) {
+      likes {
+        id
+      }
+    }
+  }
+`;
+
+const unlikeFixRequest = gql`
+  mutation unlikeFixRequest($id: String!) {
+    unlikeFixRequest(fixRequestId: $id) {
+      likes {
+        id
+      }
+    }
+  }
+`;
+
 export default compose(
   graphql(deleteFixRequest, { name: 'deleteFixRequest' }),
   graphql(closeFixRequest, { name: 'closeFixRequest' }),
   graphql(openFixRequest, { name: 'openFixRequest' }),
+  graphql(likeFixRequest, { name: 'likeFixRequest' }),
+  graphql(unlikeFixRequest, { name: 'unlikeFixRequest' }),
 )(Request);
