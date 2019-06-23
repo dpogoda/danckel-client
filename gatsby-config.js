@@ -24,13 +24,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
+        name: `DanckelApp`,
         short_name: `DanckelApp`,
         start_url: `/`,
-        background_color: `#23bdff`,
-        theme_color: `#23bdff`,
-        display: `minimal-ui`,
-        icon: `src/images/Ledigenheim.jpg`, // This path is relative to the root of the site.
+        background_color: `#ffffff`,
+        theme_color: `#ffffff`,
+        display: `fullscreen`,
+        icon: `src/images/dd.png`, // This path is relative to the root of the site.
+        gcm_sender_id: '482941778795',
+        gcm_sender_id_comment: 'Do not change the GCM Sender ID',
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
