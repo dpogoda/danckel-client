@@ -15,7 +15,7 @@ const SignIn = ({ signIn }) => {
 
   /* eslint-disable */
   if (typeof window !== 'undefined' && window.localStorage.getItem('token')) {
-    navigate('./request/');
+    navigate('./main/');
   } else if (loading) {
     setLoading(false);
   }
@@ -64,7 +64,7 @@ const SignIn = ({ signIn }) => {
                   setError('');
                   const {
                     data: {
-                      signIn: { token, id, roles },
+                      signIn: { token, id, roles, username },
                     },
                   } = signInResult;
                   // save to localstorage
@@ -72,7 +72,12 @@ const SignIn = ({ signIn }) => {
                     window.localStorage.setItem('token', token); // eslint-disable-line
                     window.localStorage.setItem('id', id); // eslint-disable-line
                     window.localStorage.setItem('roles', JSON.stringify(roles)); // eslint-disable-line
-                    navigate('./onboarding');
+                    window.localStorage.setItem('username', username); // eslint-disable-line
+                    if (username) {
+                      navigate('./main');
+                    } else {
+                      navigate('./onboarding');
+                    }
                   }
                 })
                 .catch(error => {
@@ -98,6 +103,8 @@ const signIn = gql`
       id
       token
       roles
+      username
+      roomnumber
     }
   }
 `;
