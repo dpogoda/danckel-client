@@ -28,12 +28,21 @@ const client = new ApolloClient({
   // defaultOptions,
   link: authLink.concat(
     new HttpLink({
-      uri: process.env.GATSBY_APOLLO_ENDPOINT, 
+      uri: process.env.GATSBY_APOLLO_ENDPOINT,
       fetch,
     }),
   ),
   cache,
 });
+
+export const onRouteUpdate = ({ location, prevLocation }) => {
+  console.log(
+    Layout.layoutRef.handleRouteChange(
+      location.pathname,
+      prevLocation ? prevLocation.pathname : null,
+    ),
+  );
+};
 
 // todo check mobility
 /* eslint-disable import/prefer-default-export */
@@ -44,4 +53,5 @@ export const wrapRootElement = ({ element }) => (
     </ApolloProvider>
   </Layout>
 );
+
 /* eslint-disable import/prefer-default-export */
