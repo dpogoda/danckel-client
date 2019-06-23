@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import moment from 'moment';
+import _ from 'lodash';
 import styles from './request.module.css';
 
 const Request = ({
@@ -77,11 +78,14 @@ const Request = ({
               likeFixRequest({ variables: { id } }).then(result => {
                 const {
                   data: {
-                    likeFixRequest: { likes: likesResult },
+                    likeFixRequest: { likes: likesResult, dislikes },
                   },
                 } = result;
                 if (likesResult) {
-                  setLikesState(likesResult.length);
+                  setLikesState(
+                    _.get(likesResult, 'length', 0) -
+                      _.get(dislikes, 'length', 0),
+                  );
                 }
               });
             }}
@@ -96,13 +100,15 @@ const Request = ({
               unlikeFixRequest({ variables: { id } }).then(result => {
                 const {
                   data: {
-                    unlikeFixRequest: { likes: likesResult },
+                    unlikeFixRequest: { likes: likesResult, dislikes },
                   },
                 } = result;
                 if (likesResult) {
-                  setLikesState(likesResult.length);
+                  setLikesState(
+                    _.get(likesResult, 'length', 0) -
+                      _.get(dislikes, 'length', 0),
+                  );
                 }
-                setLikesState(likesResult.length);
               });
             }}
             style={{ border: 'none', background: 'none' }}
@@ -225,6 +231,9 @@ const likeFixRequest = gql`
       likes {
         id
       }
+      dislikes {
+        id
+      }
     }
   }
 `;
@@ -233,6 +242,9 @@ const unlikeFixRequest = gql`
   mutation unlikeFixRequest($id: String!) {
     unlikeFixRequest(fixRequestId: $id) {
       likes {
+        id
+      }
+      dislikes {
         id
       }
     }

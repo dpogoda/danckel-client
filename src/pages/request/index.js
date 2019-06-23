@@ -47,7 +47,7 @@ const Requests = ({ fixRequests }) => {
               isOwn={request.author.id === myId || myRoles.includes('SV')}
               state={request.state}
               username={request.author.username}
-              likes={request.likes ? request.likes.length : 0}
+              likes={request.likes.length - request.dislikes.length}
               onDelete={() => {
                 const index = requests.findIndex(x => x.id === request.id);
                 const newRequestArray = fixRequests.splice(index, 1);
@@ -68,6 +68,9 @@ const allFixRequestsQuery = gql`
       title
       text
       likes {
+        id
+      }
+      dislikes {
         id
       }
       author {
