@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { navigate } from 'gatsby';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -7,9 +7,7 @@ import Button from '../../components/cowo/mobile/button/Button';
 import Margin from '../../components/cowo/mobile/margin/Margin';
 import Request from './request';
 
-const Requests = ({ fixRequests }) => {
-  const [requests, setRequests] = useState(fixRequests);
-
+const Requests = ({ fixRequests, refetch }) => {
   /* eslint-disable */
   const myId = typeof window !== 'undefined' && localStorage.getItem('id');
   const myRoles =
@@ -36,7 +34,7 @@ const Requests = ({ fixRequests }) => {
           alignItems: 'center',
         }}
       >
-        {fixRequests &&
+        {fixRequests && fixRequests.length ? (
           fixRequests.map(request => (
             <Request
               key={request.id}
@@ -49,12 +47,16 @@ const Requests = ({ fixRequests }) => {
               username={request.author.username}
               likes={request.likes.length - request.dislikes.length}
               onDelete={() => {
-                const index = requests.findIndex(x => x.id === request.id);
-                const newRequestArray = fixRequests.splice(index, 1);
-                setRequests(newRequestArray);
+                refetch();
+                // const index = requests.findIndex(x => x.id === request.id);
+                // const newRequestArray = fixRequests.splice(index, 1);
+                // setRequests(newRequestArray);
               }}
             />
-          ))}
+          ))
+        ) : (
+          <p>There are no current issues 🎉</p>
+        )}
         <Margin />
       </div>
     </div>
@@ -87,7 +89,7 @@ export default () => (
     query={allFixRequestsQuery}
     fetchPoallFixRequestslicy="cache-and-network"
   >
-    {({ data: { allFixRequests }, error, loading }) => {
+    {({ data: { allFixRequests }, error, loading, refetch }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>An error occured. Please try to reload the page.</p>;
 
@@ -95,7 +97,7 @@ export default () => (
         return Date.parse(b.createdAt) - Date.parse(a.createdAt);
       });
       console.log(fixRequests);
-      return <Requests fixRequests={fixRequests} />;
+      return <Requests fixRequests={fixRequests} refetch={refetch} />;
     }}
   </Query>
 );

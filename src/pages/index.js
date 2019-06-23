@@ -15,7 +15,7 @@ const SignIn = ({ signIn }) => {
 
   /* eslint-disable */
   if (typeof window !== 'undefined' && window.localStorage.getItem('token')) {
-    navigate('./main/');
+    navigate('./main');
   } else if (loading) {
     setLoading(false);
   }

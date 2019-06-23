@@ -4,6 +4,7 @@ body {
   width: 100vw;
   max-width: 100%; /* added */
   background-image: linear-gradient(#23bdff, #4eddfd);
+  background-attachment: fixed;
 }
 
 body {

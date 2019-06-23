@@ -8,9 +8,12 @@ const Settings = () => (
   <Margin>
     <Button text="About" onPress={() => navigate('/about')} />
     <Margin />
-    <Button text="Send Feedback" />
+    <Button text="Send Feedback" onPress={() => navigate('/sendFeedback')} />
     <Margin />
-    <Button text="Change password" />
+    <Button
+      text="Change password"
+      onPress={() => navigate('/changePassword')}
+    />
     <Margin />
     <Button
       text="Logout"
