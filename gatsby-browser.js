@@ -36,11 +36,9 @@ const client = new ApolloClient({
 });
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
-  console.log(
-    Layout.layoutRef.handleRouteChange(
-      location.pathname,
-      prevLocation ? prevLocation.pathname : null,
-    ),
+  Layout.layoutRef.handleRouteChange(
+    location.pathname,
+    prevLocation ? prevLocation.pathname : null,
   );
 };
 

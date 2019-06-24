@@ -23,6 +23,7 @@ class Layout extends React.Component {
       OneSignal.init({
         appId: 'a3a2ab9d-23b7-4526-bf77-689043a355fa',
         autoResubscribe: true,
+        autoRegister: true,
         notifyButton: {
           enable: false,
         },
@@ -32,12 +33,12 @@ class Layout extends React.Component {
             'Push notifications are now enabled. You can turn them off in the settings though.',
         },
       });
+      OneSignal.showNativePrompt();
     });
   }
 
   /* eslint-disable */
   handleRouteChange(newRoute, oldRoute) {
-    console.log(newRoute === '/settings');
     if (
       newRoute !== '/' &&
       newRoute !== '/onboarding' &&
