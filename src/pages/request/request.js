@@ -23,6 +23,7 @@ const Request = ({
 }) => {
   const [requestState, setRequestState] = useState(state);
   const [likesState, setLikesState] = useState(likes);
+  const [likeLoading, setLikeLoading] = useState(false);
   const createdAtFormatted = moment(createdAt).format('DD.MM.YYYY');
 
   return (
@@ -74,7 +75,9 @@ const Request = ({
         >
           <button
             type="submit"
+            disabled={likeLoading}
             onClick={() => {
+              setLikeLoading(true);
               likeFixRequest({ variables: { id } }).then(result => {
                 const {
                   data: {
@@ -86,6 +89,7 @@ const Request = ({
                     _.get(likesResult, 'length', 0) -
                       _.get(dislikes, 'length', 0),
                   );
+                  setLikeLoading(false);
                 }
               });
             }}
@@ -96,7 +100,9 @@ const Request = ({
           <span style={{ textAlign: 'center' }}>{likesState}</span>
           <button
             type="submit"
+            disabled={likeLoading}
             onClick={() => {
+              setLikeLoading(true);
               unlikeFixRequest({ variables: { id } }).then(result => {
                 const {
                   data: {
@@ -108,6 +114,7 @@ const Request = ({
                     _.get(likesResult, 'length', 0) -
                       _.get(dislikes, 'length', 0),
                   );
+                  setLikeLoading(false);
                 }
               });
             }}
