@@ -22,8 +22,14 @@ class Layout extends React.Component {
     OneSignal.push(function() {
       OneSignal.init({
         appId: 'a3a2ab9d-23b7-4526-bf77-689043a355fa',
+        autoResubscribe: true,
         notifyButton: {
-          enable: true,
+          enable: false,
+        },
+        welcomeNotification: {
+          title: 'Welcome to DanckelApp!',
+          message:
+            'Push notifications are now enabled. You can turn them off in the settings though.',
         },
       });
     });
