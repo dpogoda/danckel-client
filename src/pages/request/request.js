@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
 import moment from 'moment';
-import _ from 'lodash';
 import styles from './request.module.css';
 
 const Request = ({
