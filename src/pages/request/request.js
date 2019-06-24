@@ -84,13 +84,10 @@ const Request = ({
                     likeFixRequest: { likes: likesResult, dislikes },
                   },
                 } = result;
-                if (likesResult) {
-                  setLikesState(
-                    _.get(likesResult, 'length', 0) -
-                      _.get(dislikes, 'length', 0),
-                  );
-                  setLikeLoading(false);
+                if (likesResult && dislikes) {
+                  setLikesState(likesResult.length - dislikes.length);
                 }
+                setLikeLoading(false);
               });
             }}
             style={{ border: 'none', background: 'none' }}
@@ -109,13 +106,10 @@ const Request = ({
                     unlikeFixRequest: { likes: likesResult, dislikes },
                   },
                 } = result;
-                if (likesResult) {
-                  setLikesState(
-                    _.get(likesResult, 'length', 0) -
-                      _.get(dislikes, 'length', 0),
-                  );
-                  setLikeLoading(false);
+                if (likesResult && dislikes) {
+                  setLikesState(likesResult.length - dislikes.length);
                 }
+                setLikeLoading(false);
               });
             }}
             style={{ border: 'none', background: 'none' }}
