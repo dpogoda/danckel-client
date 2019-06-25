@@ -204,7 +204,7 @@ for a deposit of
     <h4 id="buthowdoigetawashingcard">But how do I get a washing card?</h4>
 
     <p>
-      For a deposit of 10€ you will get a washing card that you can charge at
+      For a deposit of 15€ you will get a washing card that you can charge at
       the 
       {' '}
       <a href="#svofficehourwhenisitagain">SV office hours</a>
