@@ -31,6 +31,10 @@ const SignIn = ({ signIn }) => {
       <div>
         <h3 style={{ paddingLeft: '5vw' }}>Login</h3>
         <p style={{ paddingLeft: '5vw' }}>{error}</p>
+        <p style={{ paddingLeft: '5vw', paddingRight: '5vw' }}>
+          Get your personal credentials during the SV office hours if you don't
+          have them yet
+        </p>
         <div style={{ textAlign: 'center' }}>
           <TextField
             label="Room number"
