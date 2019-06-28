@@ -21,7 +21,7 @@ class Layout extends React.Component {
     /* eslint-disable */
     OneSignal.push(function() {
       OneSignal.init({
-        appId: 'a3a2ab9d-23b7-4526-bf77-689043a355fa',
+        appId: process.env.GATSBY_ONE_SIGNAL_APP_ID,
         autoResubscribe: true,
         autoRegister: true,
         notifyButton: {
